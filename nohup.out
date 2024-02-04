@@ -1,0 +1,57 @@
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.2)
+
+2024-02-04T16:33:43.074+05:30  INFO 20036 --- [           main] c.e.s.SpringBootTutorialApplication      : Starting SpringBootTutorialApplication v0.0.1-SNAPSHOT using Java 17.0.10 with PID 20036 (C:\Users\kumar\IdeaProjects\spring-boot-tutorial\target\spring-boot-tutorial-0.0.1-SNAPSHOT.jar started by kumar in C:\Users\kumar\IdeaProjects\spring-boot-tutorial)
+2024-02-04T16:33:43.079+05:30  INFO 20036 --- [           main] c.e.s.SpringBootTutorialApplication      : No active profile set, falling back to 1 default profile: "default"
+2024-02-04T16:33:44.476+05:30  INFO 20036 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-02-04T16:33:44.493+05:30  INFO 20036 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-02-04T16:33:44.493+05:30  INFO 20036 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.18]
+2024-02-04T16:33:44.554+05:30  INFO 20036 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-02-04T16:33:44.554+05:30  INFO 20036 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1343 ms
+2024-02-04T16:33:44.700+05:30  INFO 20036 --- [           main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2024-02-04T16:33:45.027+05:30  WARN 20036 --- [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'
+2024-02-04T16:33:45.051+05:30  INFO 20036 --- [           main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2024-02-04T16:33:45.076+05:30 ERROR 20036 --- [           main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.2)
+
+2024-02-04T16:57:30.772+05:30  INFO 1228 --- [           main] c.e.s.SpringBootTutorialApplication      : Starting SpringBootTutorialApplication v0.0.1-SNAPSHOT using Java 17.0.10 with PID 1228 (C:\Users\kumar\IdeaProjects\spring-boot-tutorial\target\spring-boot-tutorial-0.0.1-SNAPSHOT.jar started by kumar in C:\Users\kumar\IdeaProjects\spring-boot-tutorial)
+2024-02-04T16:57:30.777+05:30  INFO 1228 --- [           main] c.e.s.SpringBootTutorialApplication      : No active profile set, falling back to 1 default profile: "default"
+2024-02-04T16:57:32.462+05:30  INFO 1228 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2024-02-04T16:57:32.478+05:30  INFO 1228 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2024-02-04T16:57:32.478+05:30  INFO 1228 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.18]
+2024-02-04T16:57:32.547+05:30  INFO 1228 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2024-02-04T16:57:32.549+05:30  INFO 1228 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1603 ms
+2024-02-04T16:57:32.692+05:30  INFO 1228 --- [           main] o.s.b.a.w.s.WelcomePageHandlerMapping    : Adding welcome page: class path resource [static/index.html]
+2024-02-04T16:57:33.047+05:30  INFO 1228 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path ''
+2024-02-04T16:57:33.073+05:30  INFO 1228 --- [           main] c.e.s.SpringBootTutorialApplication      : Started SpringBootTutorialApplication in 3.034 seconds (process running for 3.764)
+2024-02-04T16:57:42.920+05:30  INFO 1228 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2024-02-04T16:57:42.922+05:30  INFO 1228 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2024-02-04T16:57:42.923+05:30  INFO 1228 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
