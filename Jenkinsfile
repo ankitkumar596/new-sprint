@@ -18,17 +18,7 @@ pipeline {
                 sh 'mvn clean install'
             }
         }
-        stage('mvn test') {
-            when {
-                expression {
-                    return params.ENVIRONMENT == 'TEST'
-                }
-            }
-            steps {
-                sh 'mvn test'
-            }
-
-        }
+        
         stage('Deploy to Dev') {
             when {
                 expression {
@@ -38,10 +28,10 @@ pipeline {
             steps {
                 script {
                     // Copy the JAR to the remote server using SCP
-                    sh 'scp target/spring-boot-tutorial-0.0.1-SNAPSHOT.jar ubuntu@54.234.80.65:/home/ubuntu'
+                    sh 'scp target/spring-boot-tutorial-0.0.1-SNAPSHOT.jar  ubuntu@18.234.219.114:/home/ubuntu/dev'
 
                     // SSH into the server and kill the current process
-                    sh 'ssh -tt ubuntu@54.234.80.65 "sudo pkill -f spring-boot-tutorial-0.0.1-SNAPSHOT.jar"'
+                    sh 'ssh -tt  ubuntu@18.234.219.114 "sudo pkill -f spring-boot-tutorial-0.0.1-SNAPSHOT.jar"'
 
                 }
 
@@ -56,10 +46,10 @@ pipeline {
             steps {
                 script {
                     // Copy the JAR to the remote server using SCP
-                    sh 'scp target/spring-boot-tutorial-0.0.1-SNAPSHOT.jar ubuntu@54.234.80.65:/home/ubuntu'
+                    sh 'scp target/spring-boot-tutorial-0.0.1-SNAPSHOT.jar  ubuntu@18.234.219.114:/home/ubuntu/qa'
 
                     // SSH into the server and kill the current process
-                    sh 'ssh -tt ubuntu@54.234.80.65 "sudo pkill -f spring-boot-tutorial-0.0.1-SNAPSHOT.jar"'
+                    sh 'ssh -tt  ubuntu@18.234.219.114 "sudo pkill -f spring-boot-tutorial-0.0.1-SNAPSHOT.jar"'
 
                 }
 
@@ -74,13 +64,34 @@ pipeline {
             steps {
                 script {
                     // Copy the JAR to the remote server using SCP
-                    sh 'scp target/spring-boot-tutorial-0.0.1-SNAPSHOT.jar ubuntu@18.234.219.114:/home/ubuntu'
+                    sh 'scp target/spring-boot-tutorial-0.0.1-SNAPSHOT.jar  ubuntu@18.234.219.114:/home/ubuntu/prod'
 
                     // SSH into the server and kill the current process
-                    sh 'ssh -tt ubuntu@18.234.219.114 "sudo pkill -f spring-boot-tutorial-0.0.1-SNAPSHOT.jar"'
+                    sh 'ssh -tt  ubuntu@18.234.219.114 "sudo pkill -f spring-boot-tutorial-0.0.1-SNAPSHOT.jar"'
 
                 }
 
+            }
+        }
+        stage('Deploy to all'){
+            when {
+                expression {
+                    return params.ENVIRONMENT == 'ALL'
+                }
+            }
+            steps {
+                script {
+                    def environments = ['DEV', 'QA', 'PROD']
+                    for (def env in environments) {
+                        echo "Deploying to ${env} environment"
+
+                        // Copy the JAR to the remote server using SCP
+                        sh "scp target/spring-boot-tutorial-0.0.1-SNAPSHOT.jar  ubuntu@18.234.219.114:/home/ubuntu/${env}"
+
+                        // SSH into the server and kill the current process
+                        sh "ssh -tt  ubuntu@18.234.219.114 \"sudo pkill -f spring-boot-tutorial-0.0.1-SNAPSHOT.jar\""
+                    }
+                }
             }
         }
     }
