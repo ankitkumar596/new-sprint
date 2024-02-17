@@ -1,0 +1,42 @@
+pipeline {
+    agent any
+    
+
+    stages {
+        stage('Git checkout') {
+            steps {
+                cleanWs()
+                checkout scm: [
+                    $class: 'GitSCM', 
+                    branches: [
+                        [name: '*/main']
+                    ], 
+                    userRemoteConfigs: [
+                        [credentialsId: 'github_token', url: 'https://github.com/ankitkumar-devops/spring-boot-tutorial.git']
+                    ]
+                ]
+            }
+        }
+        
+        stage('SonarQube Analysis') {
+            def mvn = tool 'Default Maven';
+                withSonarQubeEnv() {
+                sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=spring-boot-app -Dsonar.projectName='spring-boot-app'"
+            }
+        }
+
+        stage('Deploy to Dev') {
+            when {
+                expression {
+                    return params.DEV == 'YES'
+                }
+            }
+            steps {
+                script {
+                    sh "scp target/spring-boot-tutorial-0.0.1-SNAPSHOT.jar /home/lenevo/dev"
+                    sh 'ssh -tt /home/lenevo/dev "sudo pkill -f spring-boot-tutorial-0.0.1-SNAPSHOT.jar"'
+                }
+            }
+        }
+    }
+}
