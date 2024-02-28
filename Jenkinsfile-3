@@ -1,46 +1,51 @@
 pipeline {
     agent any
     
-
     stages {
-        stage('Git checkout') {
+        stage('Checkout') {
             steps {
-                cleanWs()
-                checkout scm: [
-                    $class: 'GitSCM', 
-                    branches: [
-                        [name: '*/main']
-                    ], 
-                    userRemoteConfigs: [
-                        [credentialsId: 'github_token', url: 'https://github.com/ankitkumar-devops/spring-boot-tutorial.git']
-                    ]
-                ]
+                echo 'Checkout the repository'
+                git branch: 'main', url: 'https://github.com/ankitkumar-devops/spring-boot-tutorial.git'
+            }
+        }
+        
+        stage('Build') {
+            steps {
+                script {
+                    def mvn = tool 'Maven'
+                    sh "${mvn}/bin/mvn clean install"
+                }
             }
         }
         
         stage('SonarQube Analysis') {
             steps {
-            script {
-                def mvn = tool 'Default Maven';
-                    withSonarQubeEnv() {
-                    sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=spring-boot-app -Dsonar.projectName='spring-boot-app'"
+                script {
+                    def mvn = tool 'Maven'
+                    withSonarQubeEnv('SonarQube Server') {
+                        // Perform SonarQube analysis only on changed files
+                        sh "${mvn}/bin/mvn clean verify sonar:sonar -Dsonar.projectKey=spring-boot-app -Dsonar.projectName='spring-boot-app'"
+                    }
                 }
-            }
             }
         }
-
-        stage('Deploy to Dev') {
-            when {
-                expression {
-                    return params.DEV == 'YES'
-                }
-            }
+        stage('Deploy to dev') {
             steps {
-                script {
-                    sh "scp target/spring-boot-tutorial-0.0.1-SNAPSHOT.jar /home/lenevo/dev"
-                    sh 'ssh -tt /home/lenevo/dev "sudo pkill -f spring-boot-tutorial-0.0.1-SNAPSHOT.jar"'
-                }
+                sh 'scp target/spring-boot-tutorial-0.0.1-SNAPSHOT.jar /home/lenevo/Downloads/'
+                sh 'sudo pkill -f spring-boot-tutorial-0.0.1-SNAPSHOT.jar'
             }
         }
     }
+    
+    post {
+        success {
+            echo 'Pipeline execution completed successfully'
+        }
+        failure {
+            echo 'Pipeline execution failed'
+        }
+    }
 }
+
+# schedule a crone that will run application in every minute
+# * * * * * sudo java -jar -Dserver.port=8081 /home/lenevo/Downloads/spring-boot-tutorial-0.0.1-SNAPSHOT.jar >> /home/lenevo/logfile.log 2>&1 &
